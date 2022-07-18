@@ -1,3 +1,14 @@
+# Project
+
+This project aims to practice web development concepts with react.
+Its general idea is to add images via their url and view them on a wall. It is possible to delete and edit these images, the editing is limited to the most common filters, such as brightness, blur and saturation.
+
+Concepts:
+- Redux to control photo state;
+- Firebase Realtime Database (Non-Relation Database);
+- React Router at navigation.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
