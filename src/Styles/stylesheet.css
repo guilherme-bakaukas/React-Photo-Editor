@@ -1,0 +1,212 @@
+html {
+    font-size: 10px !important;
+    font-family: 'sans-serif' !important;
+    background-color: beige !important;
+}
+
+p{
+    font-family: 'sans-serif' !important;
+    font-size: 1.8rem !important;
+    line-height: 1.5 !important;
+}
+
+h1 {
+    font-size: 11rem !important;
+    text-align: center !important;
+    font-weight: 100 !important;
+    margin: 2rem 0 !important;
+    letter-spacing: 2px!important;
+    color: black!important;
+}
+
+h1 a{
+    color: black;
+    text-decoration: none;
+}
+
+@font-face {
+    font-family: 'billabong';
+    src: url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
+}
+
+.website{
+    background-color: beige !important;
+}
+
+.photoGrid{
+   max-width: 1000px;
+   margin: 0 auto;
+   /*0 vertical margin and auto for horizontal (same margin for both sides => center)*/
+   display: flex;
+   /*display items horizontally next to each other*/
+   /*flex-direction: column; ---> this command makes flex position vertical*/
+   flex-wrap: wrap;
+   /*flex items can break into multiple lines if needed*/
+   /*image   image*/
+   /*image        */
+
+}
+
+.figure{
+    flex-basis: calc(33.33% - 4rem);
+    /*border: 4px solid rgba(213, 212, 212, 0.648);*/
+    padding: 2rem;
+    flex-grow: 1;
+    margin: 0 2rem 2rem 2rem;
+}
+
+.image-description-box{
+    border: 4px solid rgba(213, 212, 212, 0.648);
+    padding: 2rem;
+    background-color: rgb(154, 174, 167);
+}
+
+.photo{
+    width: calc(100% + 4rem);
+    max-height: 500px;
+    height: auto;
+    margin: -2rem 0rem 0rem -2rem;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    /*border: 4px solid rgba(213, 212, 212, 0.648);*/
+    background-color: rgb(154, 174, 167);
+    border: 2px solid rgba(203, 203, 203, 0.582);
+    object-fit: contain;
+    margin-top: 0;
+}
+
+.style-button-container{
+    display: flex;
+    justify-content: center;
+    border: 2px solid rgba(203, 203, 203, 0.582);
+    border-top: none;
+    object-fit: contain;
+    margin-top: 0;
+}
+
+.style-button{
+    flex-basis: 50%;
+    text-align: center;
+    font-size: 15px;
+    border: 1px solid rgba(203, 203, 203, 0.582);
+    margin: 1px;
+    background-color: rgb(154, 174, 167);
+}
+
+.remove-button{
+    flex-basis: 50%;
+    /*flex-basis indica a porcentagem da região do flex item que o elemento irá ocupar*/
+    text-align: center;
+    /*color: red;*/
+    font-size: 15px;
+    border: 1px solid rgba(203, 203, 203, 0.582);
+    background-color: rgb(154, 174, 167);
+    /*padding: 5px;*/
+}
+
+.addIcon{
+    margin: 20px auto;
+    display: table;
+    /*used to center this button*/
+    /*padding makes element bigger, means the size of the content of the element and it's borders*/
+    /*background: url(https://cdn-icons.flaticon.com/png/512/4210/premium/4210903.png?token=exp=1649101931~hmac=6708844d96ec7359a17f807394c341dc);*/
+    background-size: contain;
+    border: none;
+}
+
+.addForm {
+    background-color: rgba(227, 32, 32, 0.598);
+    margin: 0 auto;
+    max-width: 360px;
+    padding: 40px;
+    border-radius: 10%;
+}
+
+.inputBox {
+    background-color:  rgba(240, 216, 216, 0.968) !important;
+}
+
+.edit-box{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.container {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "postSection"
+        "control-panel"
+        "button-container";
+    height: fit-content;
+    width: fit-content;
+}
+
+.postSection {
+    border: 4px solid rgba(213, 212, 212, 0.648);
+    background-color: rgb(154, 174, 167);
+    justify-content: center;
+	margin: 0 auto;
+	display: flex;
+    max-width: 1000px;
+    max-height: 600px;
+}
+
+
+.edit-photo{
+    max-width: 80vh;
+    width: auto;
+    max-height: 600px;
+    flex-grow: 0;
+    object-fit: contain;
+}
+
+.sidebar{
+    border-left: 4px solid rgba(213, 212, 212, 0.648);
+    background-color: rgb(154, 174, 167);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 18px;
+    width: fit-content;
+}
+
+.control-panel{
+    border: 4px solid rgba(213, 212, 212, 0.648);
+    border-top: none;
+    background-color: rgb(154, 174, 167);
+    width: 100%;
+    max-height: 40px;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+.slider{
+    width: 50%;
+    height: 25px;
+}
+
+.edit-item{
+    cursor: pointer;
+    flex-grow: 1;
+    background-size: contain;
+    margin: 15px 2px 15px 2px;
+    background-color: rgba(241, 243, 246, 0.945);
+    border: 2px solid rgba(213, 212, 212, 0.648);
+}
+
+.edit-item:hover, .edit-item:focus{
+    background-color: rgb(192, 214, 206);
+}
+
+.edit-item.active{
+    background-color: rgba(100, 116, 110, 0.6);
+    /*background-color: rgba(10, 59, 115, 0.399);*/
+}
