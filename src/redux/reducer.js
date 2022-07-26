@@ -6,20 +6,21 @@ function posts(state=Posts, action){
         case 'REMOVE_POST': return [...state.slice(0, action.index), ...state.slice(action.index + 1)]
         case 'ADD_POST': return [...state, action.post]
         case 'LOAD_POSTS': return action.posts
-        case 'UPDATE_POST':
-            let new_index = 0
-            let new_post = {}
+        case 'UPDATE_POST_STYLE':
+            const post_index = state.findIndex((element) => element.id === action.post.id)
 
-            state.map((post, index) => {
-                if (post.id == action.id){
-                    new_post = post
-                    new_index = index
-            }})
+            const new_post = {...action.post, style: action.style}
+            console.log([...state.slice(0, post_index), new_post, ...state.slice(post_index + 1)])
 
-            new_post = {...new_post, style: action.style}
-            console.log([...state.slice(0, new_index), new_post, ...state.slice(new_index + 1)])
+            return [...state.slice(0, post_index), new_post, ...state.slice(post_index + 1)]
+        case 'UPDATE_POST_IMAGE':
 
-            return [...state.slice(0, new_index), new_post, ...state.slice(new_index + 1)]
+            const index = state.findIndex((element) => element.id === action.post.id)
+
+            const updated_post_image = {...action.post, id: action.new_id, imageLink: action.new_imageLink}
+            console.log([...state.slice(0, index), updated_post_image, ...state.slice(index + 1)])
+
+            return [...state.slice(0, index), updated_post_image, ...state.slice(index + 1)]
             
         default: return(state)
     }

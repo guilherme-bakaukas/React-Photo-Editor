@@ -2,7 +2,6 @@ import {React, useState} from "react";
 import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {Modal, Button} from 'react-bootstrap'
 import '../Styles/stylesheet.css'
 import PopupEvent from './PopupEvent'
 

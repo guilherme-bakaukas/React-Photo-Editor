@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import PhotoWall from './PhotoWall'
 import '../Styles/stylesheet.css'
 import AddPhoto from './AddPhoto'
-import Single from './Single'
 import {Route, Routes, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -10,6 +9,7 @@ import * as actions from '../redux/actions'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCirclePlus, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import '../Styles/stylesheet.css'
+import PhotoEditingOptions from './PhotoEditingOptions'
 
 library.add(faCirclePlus, faPenToSquare, faTrashCan);
 
@@ -40,7 +40,7 @@ class Main extends Component {
         
                     <Route path = "/AddPhoto/*" element={<AddPhoto {...this.props}/>}/>
 
-                    <Route path = "/single/:id" element={<Single loading = {this.state.loading} {...this.props}/>}/>
+                    <Route path = "/single/:id/*" element={<PhotoEditingOptions loading = {this.state.loading} {...this.props}/>}/>
         
                 </Routes>
                 

@@ -193,13 +193,39 @@ h1 a{
     height: 25px;
 }
 
-.edit-item{
+.basic-edit-item{
     cursor: pointer;
     flex-grow: 1;
     background-size: contain;
     margin: 15px 2px 15px 2px;
     background-color: rgba(241, 243, 246, 0.945);
     border: 2px solid rgba(213, 212, 212, 0.648);
+}
+
+.basic-edit-item:hover, .edit-item:focus{
+    background-color: rgb(192, 214, 206);
+}
+
+.basic-edit-item.active{
+    background-color: rgba(100, 116, 110, 0.6);
+    /*background-color: rgba(10, 59, 115, 0.399);*/
+}
+
+.editOptionsBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.edit-item{
+    cursor: pointer;
+    flex-grow: 0;
+    background-size: contain;
+    margin: 15px 2px 15px 2px;
+    background-color: rgba(241, 243, 246, 0.945);
+    border: 2px solid rgba(213, 212, 212, 0.648);
+    font-size: 1vw;
+    font-weight: bold;
 }
 
 .edit-item:hover, .edit-item:focus{
@@ -209,4 +235,18 @@ h1 a{
 .edit-item.active{
     background-color: rgba(100, 116, 110, 0.6);
     /*background-color: rgba(10, 59, 115, 0.399);*/
+}
+
+.select-combo{
+    font-size: 50px;
+}
+
+.form-group{
+    padding: 10px;
+    border: 2px solid rgba(213, 212, 212, 0.648);
+    background-color: rgba(100, 116, 110, 0.6);
+}
+
+.form-selector{
+    padding: 10px;
 }

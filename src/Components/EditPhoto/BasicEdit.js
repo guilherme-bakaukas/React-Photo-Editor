@@ -1,70 +1,15 @@
 import {React, useState} from 'react'
-import { useNavigate, useParams } from "react-router-dom";
-import EditOption from './EditOption'
-import SliderEditor from './SliderEditor';
-
-const DEFAULT_STYLE = [
-    {
-        name: "Brightness",
-        property: "brightness",
-        value: 100,
-        range: {
-            min: 0,
-            max: 200
-        },
-        unit: '%'
-    },
-    {
-        name: "Contrast",
-        property: "contrast",
-        value: 100,
-        range: {
-            min: 0,
-            max: 200
-        },
-        unit: '%'
-    },
-    {
-        name: "Saturation",
-        property: "saturate",
-        value: 100,
-        range: {
-            min: 0,
-            max: 200
-        },
-        unit: '%'
-    },
-    {
-        name: "Grayscale",
-        property: "grayscale",
-        value: 0,
-        range: {
-            min: 0,
-            max: 100
-        },
-        unit: '%'
-    },        
-    {
-        name: "Blur",
-        property: "blur",
-        value: 0,
-        range: {
-            min: 0,
-            max: 20
-        },
-        unit: 'px'
-    }
-]
+import { useNavigate } from "react-router-dom"
+import BasicEditOption from './BasicEditOption'
+import SliderEditor from '../SliderEditor'
+import DEFAULT_STYLE from '../../data/default_style'
 
 
-function Single(props){
+function Basic_Edit(props){
+
+    const post = props.post
 
     const navigate = useNavigate()
-    const params = useParams()
-    const id = params.id
-    const posts = props.posts
-    const post = posts.find((post) => post.id === parseInt(id))
-
     const [styleOptions, setStyleOptions] = useState((post.style !== undefined && post.style.length !== 0) ? post.style : DEFAULT_STYLE)
     const [selectedKey, setSelectedKey] = useState(0)
     const previousStyle = (post.style !== undefined && post.style.length !== 0) ? post.style : DEFAULT_STYLE
@@ -72,6 +17,7 @@ function Single(props){
     const selectedItem = styleOptions[selectedKey]
 
     function handleSlideChange( { target }){
+        console.log(post)
         console.log(selectedItem)
         setStyleOptions(prevOptions => {
             return prevOptions.map((option, index) => {
@@ -89,13 +35,6 @@ function Single(props){
         return {filter: filters.join(' ')}
     }
 
-    function getStyleValues() {
-        const styleValues = styleOptions.map((option) => {
-            return {property: option.property, 
-                    value: option.value}
-        })
-        console.log(styleValues)
-    }
 
     function handleCancel(){
         setStyleOptions(previousStyle)
@@ -103,13 +42,9 @@ function Single(props){
 
     function handleApply(){
         console.log("Submitting changes to firebase");
-        props.startUpdatingPost(id, styleOptions)
+        props.startUpdatingPost(post, styleOptions)
         navigate('/')
     }
-    
-    if (props.loading === true){
-        return <div className='loader'>...loading</div>
-    } else if (post) {
         return(
             <div className='container'>
                 <section className='postSection'>
@@ -117,7 +52,7 @@ function Single(props){
                     <div className='sidebar'> 
                     {styleOptions.map((item, index) => {
                         return(
-                            <EditOption name = {item.name}
+                            <BasicEditOption name = {item.name}
                             key = {index} 
                             active = {index === selectedKey}
                             handleClick = {() => setSelectedKey(index)}/>
@@ -140,9 +75,6 @@ function Single(props){
             </div>
 
         )
-    } else {
-        return <h4>No post found...</h4>
     }
-}
 
-export default Single
+export default Basic_Edit

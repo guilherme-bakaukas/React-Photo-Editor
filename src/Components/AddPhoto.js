@@ -18,8 +18,8 @@ function AddPhoto(props) {
         }
         //use Date as id: More recently added => Bigger the number (used to sort images)
         if(imageLink && description){
-           props.startAddingPost(newPost)
-           navigate('/')
+            props.startAddingPostImage(newPost)
+            navigate('/')
         }
 
     }

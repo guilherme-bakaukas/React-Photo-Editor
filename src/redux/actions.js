@@ -1,6 +1,31 @@
 import {database} from '../database/config'
 import { ref, remove, update, get } from "firebase/database";
+import axios from 'axios'
+
+const urlBase = 'http://localhost:3000'
 //action creators => display an action to reducer
+
+export function startUpdatingPostImage(post, new_id, new_imageLink){
+    return (dispatch) => {
+        return update(ref(database, `posts/${post.id}`), {id: new_id, imageLink: new_imageLink}).then(() => {
+            dispatch(updatePostImage(post, new_id, new_imageLink))
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+}
+
+export function startAddingPostImage(post){
+    return (dispatch) => {
+        axios.post(`${urlBase}/addImage`, post).then(res=>{
+            console.log(res.data)
+            post["imageLink"] = res.data
+            dispatch(startAddingPost(post))
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+}
 
 export function startAddingPost(post){
     return (dispatch) => {
@@ -31,21 +56,30 @@ export function startRemovingPost(index, id) {
     }
 }
 
-export function startUpdatingPost(id, style){
+export function startUpdatingPost(post, style){
     return (dispatch) => {
-        return update(ref(database, `posts/${id}`), {style: style}).then(() => {
-            dispatch(updatePost(id, style))
+        return update(ref(database, `posts/${post.id}`), {style: style}).then(() => {
+            dispatch(updatePost(post, style))
         }).catch((error) => {
             console.log(error)
         })
     }
 }
 
-export function updatePost(id, style){
-    console.log(id.type)
+export function updatePostImage(post, new_id, new_imageLink){
     return {
-        type: 'UPDATE_POST',
-        id,
+        type: 'UPDATE_POST_IMAGE',
+        post,
+        new_id,
+        new_imageLink
+    }
+}
+
+
+export function updatePost(post, style){
+    return {
+        type: 'UPDATE_POST_STYLE',
+        post,
         style
     }
 
