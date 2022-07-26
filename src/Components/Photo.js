@@ -13,7 +13,7 @@ export default function Photo(props){
 
     function getImageStyle(){
 
-        if(post.style == undefined) return {}
+        if(post.style === undefined) return {}
 
         const filters = post.style.map((option) => {
             return `${option.property}(${option.value}${option.unit})`

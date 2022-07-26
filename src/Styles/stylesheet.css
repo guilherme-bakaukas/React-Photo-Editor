@@ -158,6 +158,13 @@ h1 a{
     max-height: 600px;
 }
 
+.loading-section {
+    padding: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .edit-photo{
     max-width: 80vh;
@@ -249,4 +256,11 @@ h1 a{
 
 .form-selector{
     padding: 10px;
+}
+
+.loading-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
 }

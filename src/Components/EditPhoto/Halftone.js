@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, Spinner } from "react-bootstrap"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import DEFAULT_STYLE from '../../data/default_style'
+import BounceLoader from 'react-spinners/BounceLoader'
 
 const urlBase = 'http://localhost:3000'
 
 export default function Halftone(props){
 
     const post = props.post
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const [id, setId] = useState(post.id)
     const [imageLink, setImageLink] = useState(post.imageLink)
@@ -20,9 +22,10 @@ export default function Halftone(props){
     const handleApply = (event) => {
         // Send image to backend
         event.preventDefault();
-        event.stopPropagation();
+        event.stopPropagation()
 
         const new_id_value = parseInt(Number(new Date()))
+        setLoading(true)
         axios.post(`${urlBase}/applyHalftone`, {...post, new_id: new_id_value, option: halftoneOption}).then(res=>{
             console.log(res.data)
             if (res.data !== null) {
@@ -30,7 +33,9 @@ export default function Halftone(props){
                 setId(new_id_value)
                 setImageChanged(true)
             }
+            setLoading(false)
         }).catch((error) => {
+            
             console.log(error)
             //criar alert de erro
         })
@@ -62,7 +67,12 @@ export default function Halftone(props){
     return(
             <div className='container'>
                 <section className='postSection'>
-                    <img className='edit-photo' src={imageLink} alt={post.description} style={getImageStyle()}/>
+                        {loading ? ( <div className="loading-section"> <BounceLoader 
+                            size={40}
+                            loading={loading}
+                            color={"#64746E"}
+                            /> </div>) :
+                        (<img className='edit-photo' src={imageLink} alt={post.description} style={getImageStyle()}/> )}
                     <div className='sidebar'>
                         <Form onSubmit={handleApply}>
                             <Form.Group className="form-group">

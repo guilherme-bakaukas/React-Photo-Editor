@@ -1,5 +1,6 @@
-import {database} from '../database/config'
+import {database, storage} from '../database/config'
 import { ref, remove, update, get } from "firebase/database";
+import {ref as storageRef, deleteObject} from "firebase/storage"
 import axios from 'axios'
 
 const urlBase = 'http://localhost:3000'
@@ -8,7 +9,14 @@ const urlBase = 'http://localhost:3000'
 export function startUpdatingPostImage(post, new_id, new_imageLink){
     return (dispatch) => {
         return update(ref(database, `posts/${post.id}`), {id: new_id, imageLink: new_imageLink}).then(() => {
-            dispatch(updatePostImage(post, new_id, new_imageLink))
+            //delete previous image
+            const postImageRef = storageRef(storage, `${post.id}.png`);
+            deleteObject(postImageRef).then(() => {
+                //update posts state
+                dispatch(updatePostImage(post, new_id, new_imageLink))
+            }).catch((error) => {
+                console.log(error)
+            });
         }).catch((error) => {
             console.log(error)
         })
@@ -51,7 +59,14 @@ export function startLoadingPosts() {
 export function startRemovingPost(index, id) {
     return(dispatch) => {
         return remove(ref(database, `posts/${id}`)).then(() => {
-            dispatch(removePost(index))
+            
+            const postImageRef = storageRef(storage, `${id}.png`);
+            // Delete image from storage
+            deleteObject(postImageRef).then(() => {
+                dispatch(removePost(index))
+            }).catch((error) => {
+                console.log(error)
+            });
         })
     }
 }

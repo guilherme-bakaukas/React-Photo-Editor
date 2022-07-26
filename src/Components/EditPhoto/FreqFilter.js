@@ -3,11 +3,13 @@ import { Form, Button } from "react-bootstrap"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import DEFAULT_STYLE from '../../data/default_style'
+import BounceLoader from 'react-spinners/BounceLoader'
 
 const urlBase = 'http://localhost:3000'
 
 export default function FreqFilter(props){
     
+    const [loading, setLoading] = useState(false)
     const post = props.post
     const navigate = useNavigate()
     const [id, setId] = useState(post.id)
@@ -24,6 +26,7 @@ export default function FreqFilter(props){
 
         console.log(filterOption)
         const new_id_value = parseInt(Number(new Date()))
+        setLoading(true)
 
         axios.post(`${urlBase}/applyFilter`, {...post, new_id: new_id_value, option: filterOption}).then(res=>{
             console.log(res.data)
@@ -32,6 +35,7 @@ export default function FreqFilter(props){
                 setId(new_id_value)
                 setImageChanged(true)
             }
+            setLoading(false)
         }).catch((error) => {
             console.log(error)
             //criar alert de erro
@@ -66,7 +70,12 @@ export default function FreqFilter(props){
     return(
             <div className='container'>
                 <section className='postSection'>
-                    <img className='edit-photo' src={imageLink} alt={post.description} style={getImageStyle()}/>
+                    {loading ? ( <div className="loading-section"> <BounceLoader 
+                            size={40}
+                            loading={loading}
+                            color={"#64746E"}
+                            /> </div>) :
+                        (<img className='edit-photo' src={imageLink} alt={post.description} style={getImageStyle()}/> )}
                     <div className='sidebar'>
                         <Form onSubmit={handleApply}>
                             <Form.Group className="form-group">

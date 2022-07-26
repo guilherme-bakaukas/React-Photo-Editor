@@ -10,6 +10,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCirclePlus, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import '../Styles/stylesheet.css'
 import PhotoEditingOptions from './PhotoEditingOptions'
+import GridLoader from 'react-spinners/GridLoader'
 
 library.add(faCirclePlus, faPenToSquare, faTrashCan);
 
@@ -31,18 +32,29 @@ class Main extends Component {
                 <h1>
                     <Link to="/"> Photowall </Link>
                 </h1>
-                <Routes>
-        
-                    <Route path = "/" element={               
-                        <React.Fragment>
-                            <PhotoWall {...this.props}/>
-                        </React.Fragment>}/>
-        
-                    <Route path = "/AddPhoto/*" element={<AddPhoto {...this.props}/>}/>
+                <div className='loading-container'>
+                    {this.state.loading ? (
+                        <GridLoader
+                        size={20}
+                        loading={this.state.loading}
+                        color={"#36D7B7"}
+                        />
+                    ) : (<Routes>
+            
+                        <Route path = "/" element={               
+                            <React.Fragment>
+                                <PhotoWall {...this.props}/>
+                            </React.Fragment>}/>
 
-                    <Route path = "/single/:id/*" element={<PhotoEditingOptions loading = {this.state.loading} {...this.props}/>}/>
-        
-                </Routes>
+                        <Route path = "/AddPhoto/*" element={<AddPhoto {...this.props}/>}/>
+
+                        <Route path = "/single/:id/*" element={<PhotoEditingOptions loading = {this.state.loading} {...this.props}/>}/>
+
+                        </Routes>)
+                    }
+
+                </div>
+            
                 
             </div>)
     }

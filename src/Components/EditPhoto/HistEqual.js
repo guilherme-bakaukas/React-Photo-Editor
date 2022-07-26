@@ -3,11 +3,13 @@ import { useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import { Button } from "react-bootstrap"
 import DEFAULT_STYLE from '../../data/default_style'
+import BounceLoader from 'react-spinners/BounceLoader'
 
 const urlBase = 'http://localhost:3000'
 
 export default function HistEqual(props){
 
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const post = props.post
     const [id, setId] = useState(post.id)
@@ -20,6 +22,8 @@ export default function HistEqual(props){
         // Send image to backend
         const new_id_value = parseInt(Number(new Date()))
         console.log("Apply Hist")
+        setLoading(true)
+
         axios.post(`${urlBase}/applyHistEqual`, {...post, new_id: new_id_value}).then(res=>{
             console.log(res.data)
             if (res.data !== null) {
@@ -27,6 +31,7 @@ export default function HistEqual(props){
                 setId(new_id_value)
                 setImageChanged(true)
             }
+            setLoading(false)
         }).catch((error) => {
             console.log(error)
             //criar alert de erro
@@ -60,7 +65,12 @@ export default function HistEqual(props){
     return(
             <div className='container'>
                 <section className='postSection'>
-                    <img className='edit-photo' src={imageLink} alt={post.description} style={getImageStyle()}/>
+                    {loading ? ( <div className="loading-section"> <BounceLoader 
+                            size={40}
+                            loading={loading}
+                            color={"#64746E"}
+                            /> </div>) :
+                        (<img className='edit-photo' src={imageLink} alt={post.description} style={getImageStyle()}/> )}
                     <div className='p-3'>
                     <Button variant="success" size="lg" onClick={() => handleApply()}>Apply</Button>
                     </div>
