@@ -17,8 +17,6 @@ function Basic_Edit(props){
     const selectedItem = styleOptions[selectedKey]
 
     function handleSlideChange( { target }){
-        console.log(post)
-        console.log(selectedItem)
         setStyleOptions(prevOptions => {
             return prevOptions.map((option, index) => {
                 if (index === selectedKey) return {...option, value: target.value}

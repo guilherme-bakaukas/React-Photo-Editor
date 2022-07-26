@@ -32,14 +32,14 @@ class Main extends Component {
                 <h1>
                     <Link to="/"> Photowall </Link>
                 </h1>
-                <div className='loading-container'>
                     {this.state.loading ? (
+                        <div className='loading-container'>
                         <GridLoader
                         size={20}
                         loading={this.state.loading}
                         color={"#36D7B7"}
                         />
-                    ) : (<Routes>
+                    </div>) : (<Routes>
             
                         <Route path = "/" element={               
                             <React.Fragment>
@@ -53,9 +53,6 @@ class Main extends Component {
                         </Routes>)
                     }
 
-                </div>
-            
-                
             </div>)
     }
 

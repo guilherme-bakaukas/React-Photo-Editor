@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, Alert } from "react-bootstrap"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import DEFAULT_STYLE from '../../data/default_style'
@@ -9,6 +9,7 @@ const urlBase = 'http://localhost:3000'
 
 export default function FreqFilter(props){
     
+    const [showError, setShowError] = useState(false)
     const [loading, setLoading] = useState(false)
     const post = props.post
     const navigate = useNavigate()
@@ -37,8 +38,11 @@ export default function FreqFilter(props){
             }
             setLoading(false)
         }).catch((error) => {
+
+            setLoading(false)
+            setShowError(true)
             console.log(error)
-            //criar alert de erro
+
         })
 
     }
@@ -69,6 +73,12 @@ export default function FreqFilter(props){
 
     return(
             <div className='container'>
+                {showError ? (<Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+                <Alert.Heading>Sorry, you got an error!</Alert.Heading>
+                <p>
+                Something went wrong while editing the image, please try again later.
+                </p>
+                </Alert>) : null}
                 <section className='postSection'>
                     {loading ? ( <div className="loading-section"> <BounceLoader 
                             size={40}

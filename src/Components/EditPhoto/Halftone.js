@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, Spinner } from "react-bootstrap"
+import { Form, Button, Alert } from "react-bootstrap"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import DEFAULT_STYLE from '../../data/default_style'
@@ -10,6 +10,7 @@ const urlBase = 'http://localhost:3000'
 export default function Halftone(props){
 
     const post = props.post
+    const [showError, setShowError] = useState(false)
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const [id, setId] = useState(post.id)
@@ -35,9 +36,9 @@ export default function Halftone(props){
             }
             setLoading(false)
         }).catch((error) => {
-            
+            setLoading(false)
             console.log(error)
-            //criar alert de erro
+            setShowError(true)
         })
     }
 
@@ -66,6 +67,12 @@ export default function Halftone(props){
 
     return(
             <div className='container'>
+                {showError ? (<Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+                <Alert.Heading>Sorry, you got an error!</Alert.Heading>
+                <p>
+                Something went wrong while editing the image, please try again later.
+                </p>
+                </Alert>) : null}
                 <section className='postSection'>
                         {loading ? ( <div className="loading-section"> <BounceLoader 
                             size={40}

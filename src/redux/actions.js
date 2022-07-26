@@ -73,7 +73,7 @@ export function startRemovingPost(index, id) {
 
 export function startUpdatingPost(post, style){
     return (dispatch) => {
-        return update(ref(database, `posts/${post.id}`), {style: style}).then(() => {
+        return update(ref(database, `posts/${post.id}`), {...post , style: style}).then(() => {
             dispatch(updatePost(post, style))
         }).catch((error) => {
             console.log(error)

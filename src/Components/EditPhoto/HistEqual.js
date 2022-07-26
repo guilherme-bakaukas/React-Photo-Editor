@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom"
-import { Button } from "react-bootstrap"
+import { Button, Alert } from "react-bootstrap"
 import DEFAULT_STYLE from '../../data/default_style'
 import BounceLoader from 'react-spinners/BounceLoader'
 
@@ -9,6 +9,7 @@ const urlBase = 'http://localhost:3000'
 
 export default function HistEqual(props){
 
+    const [showError, setShowError] = useState(false)
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const post = props.post
@@ -33,8 +34,9 @@ export default function HistEqual(props){
             }
             setLoading(false)
         }).catch((error) => {
+            setLoading(false)
             console.log(error)
-            //criar alert de erro
+            setShowError(true)
         })
     }
 
@@ -64,6 +66,12 @@ export default function HistEqual(props){
 
     return(
             <div className='container'>
+                {showError ? (<Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+                <Alert.Heading>Sorry, you got an error!</Alert.Heading>
+                <p>
+                Something went wrong while editing the image, please try again later.
+                </p>
+                </Alert>) : null}
                 <section className='postSection'>
                     {loading ? ( <div className="loading-section"> <BounceLoader 
                             size={40}
