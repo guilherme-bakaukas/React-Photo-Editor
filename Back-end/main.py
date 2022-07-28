@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask import request
 import cv2 as cv
-from firebase_config1 import storage
+from firebase_config import storage
 from PIL import Image
 import requests
 from io import BytesIO
