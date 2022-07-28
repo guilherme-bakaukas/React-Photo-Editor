@@ -5,6 +5,7 @@ import BasicEdit from './EditPhoto/BasicEdit';
 import HistEqual from './EditPhoto/HistEqual'
 import FreqFilter from './EditPhoto/FreqFilter'
 import Halftone from './EditPhoto/Halftone'
+import GridLoader from 'react-spinners/GridLoader'
 
 
 const editOptions = [
@@ -42,7 +43,11 @@ export default function PhotoEditingOptions(props){
     }
 
     if (props.loading === true){
-        return <div className='loader'>...loading</div>
+        return <GridLoader
+        size={20}
+        loading={this.props.loading}
+        color={"#36D7B7"}
+        />
     } else if (post) {
         return (
             <div className=''>

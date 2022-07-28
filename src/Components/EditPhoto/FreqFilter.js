@@ -10,10 +10,9 @@ const urlBase = 'http://localhost:3000'
 export default function FreqFilter(props){
     
     const [showError, setShowError] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [imageLoading, setImageLoading] = useState(false)
     const post = props.post
     const navigate = useNavigate()
-    const [id, setId] = useState(post.id)
     const [imageLink, setImageLink] = useState(post.imageLink)
     const [imageChanged, setImageChanged] = useState(false)
     const [filterOption, setFilterOption] = useState('1')
@@ -27,19 +26,18 @@ export default function FreqFilter(props){
 
         console.log(filterOption)
         const new_id_value = parseInt(Number(new Date()))
-        setLoading(true)
+        setImageLoading(true)
 
         axios.post(`${urlBase}/applyFilter`, {...post, new_id: new_id_value, option: filterOption}).then(res=>{
             console.log(res.data)
             if (res.data !== null) {
                 setImageLink(res.data)
-                setId(new_id_value)
                 setImageChanged(true)
             }
-            setLoading(false)
+            setImageLoading(false)
         }).catch((error) => {
 
-            setLoading(false)
+            setImageLoading(false)
             setShowError(true)
             console.log(error)
 
@@ -50,14 +48,18 @@ export default function FreqFilter(props){
     function handleDiscard(){
         //Discard changes
         setImageLink(post.imageLink)
-        setId(post.id)
         setImageChanged(false)
     }
 
     function handleSave(){
         //Save changes
         if (imageChanged) {
-            props.startUpdatingPostImage(post, id, imageLink)
+            props.startSetLoading(true)
+            props.startUpdatingPostImage(post, imageLink).catch((error) => {
+                console.log(error)
+                props.startSetLoading(false)
+                props.startUpdatingErrorStatus(true, 'An error occured on Filtering process, please try again later')
+            })
             navigate('/')
         }
 
@@ -80,9 +82,9 @@ export default function FreqFilter(props){
                 </p>
                 </Alert>) : null}
                 <section className='postSection'>
-                    {loading ? ( <div className="loading-section"> <BounceLoader 
+                    {imageLoading ? ( <div className="loading-section"> <BounceLoader 
                             size={40}
-                            loading={loading}
+                            loading={imageLoading}
                             color={"#64746E"}
                             /> </div>) :
                         (<img className='edit-photo' src={imageLink} alt={post.description} style={getImageStyle()}/> )}

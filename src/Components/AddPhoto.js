@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Form } from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom'
+import { connect } from 'react-redux';
 
 function AddPhoto(props) {
 
@@ -18,7 +19,13 @@ function AddPhoto(props) {
         }
         //use Date as id: More recently added => Bigger the number (used to sort images)
         if(imageLink && description){
-            props.startAddingPostImage(newPost)
+            props.startSetLoading(true)
+            console.log(props)
+            props.startAddingPostImage(newPost).catch((error) => {
+                console.log(error)
+                props.startSetLoading(false)
+                props.startUpdatingErrorStatus(true, 'An error occured while adding the post, please try again later')
+            })
             navigate('/')
         }
 
@@ -49,4 +56,11 @@ function AddPhoto(props) {
     )
 }
 
-export default AddPhoto
+function mapStateToProps(state){
+    return{
+        posts: state.posts
+    } 
+}
+
+
+export default connect(mapStateToProps)(AddPhoto)

@@ -46,7 +46,7 @@ function Basic_Edit(props){
         return(
             <div className='container'>
                 <section className='postSection'>
-                    <img className='edit-photo' src={post.imageLink} alt={post.description} style={getImageStyle()}/>
+                    <img className='edit-photo' id='image' src={post.imageLink} alt={post.description} style={getImageStyle()}/>
                     <div className='sidebar'> 
                     {styleOptions.map((item, index) => {
                         return(

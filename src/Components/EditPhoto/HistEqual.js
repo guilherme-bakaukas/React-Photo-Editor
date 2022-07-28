@@ -10,10 +10,9 @@ const urlBase = 'http://localhost:3000'
 export default function HistEqual(props){
 
     const [showError, setShowError] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [imageLoading, setImageLoading] = useState(false)
     const navigate = useNavigate()
     const post = props.post
-    const [id, setId] = useState(post.id)
     const [imageLink, setImageLink] = useState(post.imageLink)
     const [imageChanged, setImageChanged] = useState(false)
 
@@ -23,18 +22,17 @@ export default function HistEqual(props){
         // Send image to backend
         const new_id_value = parseInt(Number(new Date()))
         console.log("Apply Hist")
-        setLoading(true)
+        setImageLoading(true)
 
         axios.post(`${urlBase}/applyHistEqual`, {...post, new_id: new_id_value}).then(res=>{
             console.log(res.data)
             if (res.data !== null) {
                 setImageLink(res.data)
-                setId(new_id_value)
                 setImageChanged(true)
             }
-            setLoading(false)
+            setImageLoading(false)
         }).catch((error) => {
-            setLoading(false)
+            setImageLoading(false)
             console.log(error)
             setShowError(true)
         })
@@ -43,14 +41,18 @@ export default function HistEqual(props){
     function handleDiscard(){
         //Discard changes
         setImageLink(post.imageLink)
-        setId(post.id)
         setImageChanged(false)
     }
 
     function handleSave(){
         //Save changes
         if (imageChanged) {
-            props.startUpdatingPostImage(post, id, imageLink)
+            props.startSetLoading(true)
+            props.startUpdatingPostImage(post, imageLink).catch((error) => {
+                console.log(error)
+                props.startSetLoading(false)
+                props.startUpdatingErrorStatus(true, 'An error occured on Histogram Equalization process, please try again later')
+            })
             navigate('/')
         }
 
@@ -73,9 +75,9 @@ export default function HistEqual(props){
                 </p>
                 </Alert>) : null}
                 <section className='postSection'>
-                    {loading ? ( <div className="loading-section"> <BounceLoader 
+                    {imageLoading ? ( <div className="loading-section"> <BounceLoader 
                             size={40}
-                            loading={loading}
+                            loading={imageLoading}
                             color={"#64746E"}
                             /> </div>) :
                         (<img className='edit-photo' src={imageLink} alt={post.description} style={getImageStyle()}/> )}

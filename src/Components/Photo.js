@@ -23,8 +23,13 @@ export default function Photo(props){
     }
 
     function onDelete(){
-        props.startRemovingPost(props.index, post.id)
         setOpenPopup(false)
+        props.startSetLoading(true)
+        props.startRemovingPost(props.index, post.id, post.imageLink).catch((error) => {
+            console.log(error)
+            props.startSetLoading(false)
+            props.startUpdatingErrorStatus(true, 'An error occured on deleting process, please try again later')
+        })
     }
 
     function handleClickRemove(){
