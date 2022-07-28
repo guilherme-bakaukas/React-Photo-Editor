@@ -1,6 +1,7 @@
 # Project
 
 This project aims to practice web development concepts with react and also to apply image processing methods with python.
+
 Its general idea is to add images via their url and view them on a wall. It is possible to delete and edit these images, the editing includes the most common filters, such as brightness, blur and saturation. However it's also possible to apply filtering by frequency (Gaussian, High-Pass and Low-Pass), perform a histogram equalization and Halftoning with Floyd, Sierra and Burkes techniques.
 
 Concepts:
