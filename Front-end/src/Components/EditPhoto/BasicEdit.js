@@ -45,7 +45,7 @@ function Basic_Edit(props){
     }
         return(
             <div className='container'>
-                <section className='postSection'>
+                <section className='postSection' id='post'>
                     <img className='edit-photo' id='image' src={post.imageLink} alt={post.description} style={getImageStyle()}/>
                     <div className='sidebar'> 
                     {styleOptions.map((item, index) => {
@@ -67,8 +67,8 @@ function Basic_Edit(props){
                     />
                 </div>
                 <div className='style-button-container'>
-                    <button className='style-button' onClick={handleCancel}>Cancel</button>
-                    <button className='style-button' onClick={handleApply}>Apply</button>
+                    <button className='style-button' onClick={handleCancel}>Discard</button>
+                    <button className='style-button' onClick={handleApply}>Save</button>
                 </div>
             </div>
 

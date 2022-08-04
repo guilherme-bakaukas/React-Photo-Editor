@@ -93,7 +93,7 @@ export default function Halftone(props){
                                 </Form.Select>
                             </Form.Group>
                             <div className="d-grid gap-2 p-3">
-                                <Button variant="success" type="submit">Submit</Button>
+                                <Button variant="success" type="submit">Apply</Button>
                             </div>
                         </Form>
                     </div>

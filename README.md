@@ -11,6 +11,10 @@ Concepts:
 - Integration with python API;
 - Image processing methods.
 
+## PhotoWall pages
+
+![GIF pages](./assets/GIF_Photowall_Pages.gif)
+
 ## Start Front-End
 
 In the Front-End directory, you can run:
